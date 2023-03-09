@@ -1,5 +1,7 @@
 FROM dockerproxy.repos.tech.orange/node:lts-alpine
 
+WORKDIR /
+
 RUN mkdir -p /webapp
 COPY ../.output /webapp/.output
 
