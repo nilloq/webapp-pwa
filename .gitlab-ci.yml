@@ -1,0 +1,60 @@
+# included templates
+include:
+  # Node.js template
+  # https://gitlab.tech.orange/to-be-continuous/node
+  - project: "to-be-continuous/node"
+    ref: "3.5.2"
+    file: "templates/gitlab-ci-node.yml"
+  # Docker template
+  # https://gitlab.tech.orange/to-be-continuous/docker
+  - project: "to-be-continuous/docker"
+    ref: "3.5.2"
+    file: "templates/gitlab-ci-docker.yml"
+  # OpenShift template
+  # https://gitlab.tech.orange/to-be-continuous/openshift
+  - project: "to-be-continuous/openshift"
+    ref: "2.2.4"
+    file: "/templates/gitlab-ci-openshift.yml"
+
+# secret variables
+# (define the variables below in your GitLab group/project variables)
+# OS_TOKEN: Global OpenShift API token
+# OS_INTEG_TOKEN: OpenShift API token for integration env (only define if different from global)
+# OS_STAGING_TOKEN: OpenShift API token for staging env (only define if different from global)
+# OS_PROD_TOKEN: OpenShift API token for production env (only define if different from global)
+
+# variables
+variables:
+  #node
+  NODE_IMAGE: "dockerproxy.tech.orange/node:lts-alpine"
+  NODE_LINT_ENABLED: "true"
+
+  # docker
+  DOCKER_DOCKERFILE_PATH: docker
+  DOCKER_HADOLINT_DISABLED: "true"
+  DOCKER_HEALTHCHECK_DISABLED: "true"
+  DOCKER_TRIVY_DISABLED: "true"
+
+  # openshift
+  OS_SCRIPTS_DIR: oc
+  OS_BASE_APP_NAME: "webapp-nuxt"
+  OS_URL: https://api.fr01.paas.tech.orange
+  OS_INTEG_PROJECT: "mahali-noprod"
+  OS_INTEG_ENVIRONMENT_URL: https://preview.mahali.me
+
+os-integration:
+  variables:
+    OS_IMAGE_TAG: develop
+    OS_BASE_PROJECT: mahali-noprod
+    OS_POD_REPLICAS: 1
+
+# Pipeline stages
+stages:
+  - build
+  - test
+  - package-build
+  - package-test
+  - deploy
+  - acceptance
+  - publish
+  - production

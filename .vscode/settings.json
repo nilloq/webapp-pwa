@@ -1,0 +1,33 @@
+{
+  "i18n-ally.localesPaths": ["lang"],
+  "i18n-ally.keystyle": "nested",
+  "prettier.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "editor.formatOnSave": false,
+  "peacock.color": "#79fcbb",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#abfdd4",
+    "activityBar.activeBorder": "#ff60cf",
+    "activityBar.background": "#abfdd4",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#bf82fc",
+    "activityBarBadge.foreground": "#15202b",
+    "sash.hoverBorder": "#abfdd4",
+    "statusBar.background": "#79fcbb",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#47fba2",
+    "statusBarItem.remoteBackground": "#79fcbb",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#79fcbb",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#79fcbb99",
+    "titleBar.inactiveForeground": "#15202b99",
+    "commandCenter.border": "#15202b99"
+  }
+}
