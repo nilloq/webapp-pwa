@@ -1,4 +1,4 @@
-FROM node:18-alpine3.17
+FROM dockerproxy.repos.tech.orange/node:18-alpine3.17
 
 RUN mkdir -p /webapp
 WORKDIR /webapp/.output
