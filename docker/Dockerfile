@@ -1,8 +1,7 @@
-FROM dockerproxy.repos.tech.orange/node:18-alpine3.17
+FROM dockerproxy.repos.tech.orange/node:lts-alpine
 
 RUN mkdir -p /webapp
-WORKDIR /webapp/.output
-COPY ../.output .
+COPY ../.output /webapp/.output
 
 EXPOSE 3000
 
