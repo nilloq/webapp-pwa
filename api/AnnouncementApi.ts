@@ -10,7 +10,6 @@ class AnnouncementApi {
     const query = { country, limit, offset, sort: 'weight,-creation_date' }
     try {
       const data = await $fetch('/api/v1/announcements', { query })
-      console.log(data.items)
       return { total: data.total, announcements: data.items }
     }
     catch(err) {

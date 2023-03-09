@@ -11,7 +11,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:nuxt/recommended',
     'plugin:vue/vue3-recommended',
-    'eslint:recommended'
+    'eslint:recommended',
+    'plugin:markdown/recommended'
   ],
 
   parserOptions: {

@@ -21,6 +21,7 @@
     "@vueuse/core": "^9.13.0",
     "@vueuse/nuxt": "^9.13.0",
     "eslint": "^8.35.0",
+    "eslint-plugin-markdown": "^3.0.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-vue": "^9.9.0",
     "nuxt": "^3.2.3",
