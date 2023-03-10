@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia'
 import type { Post } from '@/services/model/post.model'
 import PostService from '@/services/PostService'
 // import { useGlobalStore } from './global'
