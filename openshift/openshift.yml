@@ -54,7 +54,7 @@ objects:
           targetPort: 8080
       selector:
         deploymentConfig: ${appname}-dc
-         app: ${appname}
+        app: ${appname}
   ##################
   # Deployments    #
   ##################
