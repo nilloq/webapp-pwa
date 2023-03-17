@@ -54,6 +54,7 @@ objects:
           targetPort: 8080
       selector:
         deploymentConfig: ${appname}-dc
+         app: ${appname}
   ##################
   # Deployments    #
   ##################
@@ -64,6 +65,7 @@ objects:
         description: The deployment configuration of Mahali webapp.
       labels:
         deploymentConfig: ${appname}-dc
+        app: ${appname}
         app.kubernetes.io/part-of: front-end
         app.kubernetes.io/name: node
       name: ${appname}-dc
@@ -88,7 +90,7 @@ objects:
             - image: ${docker_image}
               imagePullPolicy: Always
               imagePullSecrets:
-                - name: webapp-gitlab-registry-access
+                - name: webapp-nuxt-gitlab-registry-access
               name: ${appname}
               readinessProbe:
                 failureThreshold: 3
@@ -119,7 +121,7 @@ objects:
                 - secretRef:
                     name: "${appname}"
       triggers:
-        - type: Manual
+        - type: ConfigChange
         # - type: ImageChange
         #   imageChangeParams:
         #     automatic: true
