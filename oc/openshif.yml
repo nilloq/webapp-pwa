@@ -1,0 +1,147 @@
+# This generic template instantiates all required OpenShift objects
+# It uses the following parameters that will be dynamically replaced by the deployment script:
+# - ${appname}
+# - ${appname_ssc}
+# - ${hostname}
+# - ${appname}
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: webapp-mahali-nuxt
+  description: an OpenShift template for Mahali webapp
+labels:
+  template: webapp-template
+  application: mahali
+##############
+# Parameters #
+##############
+parameters:
+  - name: appname
+    description: "the application target name to use in this environment (provided by GitLab CI template)"
+    required: true
+  - name: hostname
+    description: "the environment hostname (provided by GitLab CI template)"
+    required: true
+  - name: stage
+    description: "the CI job stage"
+    required: true
+  - name: OS_IMAGE_TAG
+    description: "Openshift image tag name"
+    required: true
+  - name: OS_POD_REPLICAS
+    description: "Number of replicas for each pod"
+    required: true
+  - name: docker_image
+    description: "the Docker image build in upstream stages (provided by GitLab CI template - requires using the Docker template)"
+    required: true
+objects:
+  #################
+  # Service       #
+  #################
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: ${appname}
+      labels:
+        app: ${appname}
+      annotations:
+        description: Exposes and load balances the application pods.
+    spec:
+      ports:
+        - name: ${appname}-svcport
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        deploymentConfig: ${appname}-dc
+  ##################
+  # Deployments    #
+  ##################
+  - apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    metadata:
+      annotations:
+        description: The deployment configuration of Mahali webapp.
+      labels:
+        deploymentConfig: ${appname}-dc
+        app.kubernetes.io/part-of: front-end
+        app.kubernetes.io/name: node
+      name: ${appname}-dc
+    spec:
+      replicas: ${{OS_POD_REPLICAS}}
+      revisionHistoryLimit: 2
+      selector:
+        deploymentConfig: ${appname}-dc
+        app: ${appname}
+      strategy:
+        type: Rolling
+        rollingParams:
+          timeoutSeconds: 3600
+      template:
+        metadata:
+          labels:
+            deploymentConfig: ${appname}-dc
+            app: ${appname}
+            env: ${stage}
+        spec:
+          containers:
+            - image: ${docker_image}
+              imagePullPolicy: Always
+              imagePullSecrets:
+                - name: webapp-gitlab-registry-access
+              name: ${appname}
+              readinessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: 8080
+                  scheme: HTTP
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              livenessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: 8080
+                  scheme: HTTP
+                initialDelaySeconds: 15
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              ports:
+                - containerPort: 8080
+                  name: webappsvcport
+                  protocol: TCP
+              securityContext:
+                privileged: false
+              envFrom:
+                - secretRef:
+                    name: "${appname}"
+      triggers:
+        - type: Manual
+        # - type: ImageChange
+        #   imageChangeParams:
+        #     automatic: true
+        #     containerNames:
+        #       - ${appname}
+        #     from:
+        #       kind: ImageStreamTag
+        #       name: webapp-mahali:${OS_IMAGE_TAG}
+# === Route
+# - apiVersion: route.openshift.io/v1
+#   kind: Route
+#   metadata:
+#     annotations:
+#       description: The route exposes the service at a hostname.
+#     labels:
+#       app: ${appname}
+#     name: ${appname}
+#   spec:
+#     host: ${hostname}
+#     port:
+#       targetPort: 8080
+#     to:
+#       kind: Service
+#       name: ${appname}
+#
