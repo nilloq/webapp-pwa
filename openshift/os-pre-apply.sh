@@ -19,7 +19,7 @@ create_credentials_integration () {
 -p APP_TITLE=${INTEGRATION_APP_TITLE} \
 -p BASE_API_URL=${INTEGRATION_BASE_API_URL} \
 -p BASE_WEBAPP_URL=${INTEGRATION_BASE_WEBAPP_URL} \
--f oc/app-credentials.yml | oc apply -f -
+-f openshift/app-credentials.yml | oc apply -f -
     printInfo "Secret app successfully deployed"
 }
 
@@ -37,7 +37,7 @@ create_credentials_staging () {
 -p APP_TITLE=${STAGING_APP_TITLE} \
 -p BASE_API_URL=${STAGING_BASE_API_URL} \
 -p BASE_WEBAPP_URL=${STAGING_BASE_WEBAPP_URL} \
--f oc/app-credentials.yml | oc apply -f -
+-f openshift/app-credentials.yml | oc apply -f -
     printInfo "Secret app successfully deployed"
 }
 
@@ -55,7 +55,7 @@ create_credentials_production () {
 -p APP_TITLE=${PROD_APP_TITLE} \
 -p BASE_API_URL=${PROD_BASE_API_URL} \
 -p BASE_WEBAPP_URL=${PROD_BASE_WEBAPP_URL} \
--f oc/app-credentials.yml | oc apply -f -
+-f openshift/app-credentials.yml | oc apply -f -
     printInfo "Secret app successfully deployed"
 }
 
