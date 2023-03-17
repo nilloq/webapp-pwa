@@ -54,7 +54,6 @@ objects:
           targetPort: 8080
       selector:
         deploymentConfig: ${appname}-dc
-        app: ${appname}
   ##################
   # Deployments    #
   ##################
@@ -65,7 +64,6 @@ objects:
         description: The deployment configuration of Mahali webapp.
       labels:
         deploymentConfig: ${appname}-dc
-        app: ${appname}
         app.kubernetes.io/part-of: front-end
         app.kubernetes.io/name: node
       name: ${appname}-dc
@@ -74,7 +72,6 @@ objects:
       revisionHistoryLimit: 2
       selector:
         deploymentConfig: ${appname}-dc
-        app: ${appname}
       strategy:
         type: Rolling
         rollingParams:
@@ -83,7 +80,6 @@ objects:
         metadata:
           labels:
             deploymentConfig: ${appname}-dc
-            app: ${appname}
             env: ${stage}
         spec:
           containers:
