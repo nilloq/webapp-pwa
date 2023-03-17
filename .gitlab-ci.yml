@@ -37,8 +37,7 @@ variables:
   DOCKER_TRIVY_DISABLED: "true"
 
   # openshift
-  OS_SCRIPTS_DIR: oc
-  OS_BASE_APP_NAME: "webapp-nuxt"
+  OS_SCRIPTS_DIR: openshift
   OS_URL: https://api.fr01.paas.tech.orange
   OS_INTEG_PROJECT: "mahali-noprod"
   OS_INTEG_ENVIRONMENT_URL: https://preview.mahali.me
@@ -46,7 +45,6 @@ variables:
 os-integration:
   variables:
     OS_IMAGE_TAG: develop
-    OS_BASE_PROJECT: mahali-noprod
     OS_POD_REPLICAS: 1
 
 # Pipeline stages
