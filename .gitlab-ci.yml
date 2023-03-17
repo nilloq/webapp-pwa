@@ -28,6 +28,7 @@ variables:
   #node
   NODE_IMAGE: "dockerproxy.tech.orange/node:lts-alpine"
   NODE_LINT_ENABLED: "true"
+  NODE_BUILD_DIR: ".output"
 
   # docker
   DOCKER_DOCKERFILE_PATH: docker
