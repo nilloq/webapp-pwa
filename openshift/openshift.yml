@@ -49,9 +49,9 @@ objects:
     spec:
       ports:
         - name: ${appname}-svcport
-          port: 8080
+          port: 3000
           protocol: TCP
-          targetPort: 8080
+          targetPort: 3000
       selector:
         deploymentConfig: ${appname}-dc
   ##################
@@ -108,7 +108,7 @@ objects:
                 successThreshold: 1
                 timeoutSeconds: 1
               ports:
-                - containerPort: 8080
+                - containerPort: 3000
                   name: webappsvcport
                   protocol: TCP
               securityContext:
@@ -138,7 +138,7 @@ objects:
 #   spec:
 #     host: ${hostname}
 #     port:
-#       targetPort: 8080
+#       targetPort: 3000
 #     to:
 #       kind: Service
 #       name: ${appname}
