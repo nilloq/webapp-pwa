@@ -2,8 +2,10 @@
 import {
   defineConfig,
   presetIcons,
-  presetUno
+  presetUno,
+  presetWebFonts
 } from 'unocss'
+import transformerDirectives from '@unocss/transformer-directives'
 
 export default defineConfig({
   rules: [
@@ -29,17 +31,28 @@ export default defineConfig({
           props.height = '24px'
         }
       }
+    }),
+    presetWebFonts({
+      provider: 'google', // default provider
+      fonts: {
+        // these will extend the default theme
+        sans: 'Roboto'
+      }
     })
+  ],
+  transformers: [
+    transformerDirectives()
   ],
   theme: {
     colors: {
-      primary: '#f77f00',
-      seconday: '#0227cc',
-      error: '#bc3d46',
+      primary: '#0227cc',
+      seconday: '#dfe3f7',
+      alert: '#bc3d46',
       success: '#03a678',
       warning: '#f6c244',
       silver: '#cccccc',
-      lightgrey: '#eeeeee'
+      lightgrey: '#eeeeee',
+      grey: '#999999'
     }
   }
 })

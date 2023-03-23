@@ -10,24 +10,28 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@vite-pwa/nuxt'
   ],
+  imports: {
+    dirs: ['stores']
+  },
   // runtimeConfig: {
   //   public: {
   //     baseURL: process.env.BASE_URL || 'https://localhost:3000/api/v1'
   //   }
   // },
-  vite: {
-    server: {
-      proxy: {
-        '/api/v1': {
-          target: 'https://preview.mahali.me/',
-          changeOrigin: true,
-          secure: false
-        }
-      }
-    }
-  },
+  // vite: {
+  //   server: {
+  //     proxy: {
+  //       '/api/v1': {
+  //         target: 'https://preview.mahali.me/',
+  //         changeOrigin: true,
+  //         secure: false
+  //       }
+  //     }
+  //   }
+  // },
   css: [
-    '@unocss/reset/tailwind.css'
+    '@unocss/reset/tailwind.css',
+    '@/assets/main.scss'
   ],
   sourcemap: {
     server: true,

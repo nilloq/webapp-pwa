@@ -9,8 +9,8 @@ class AnnouncementApi {
     params.append('sort', 'weight,-creation_date')
     const query = { country, limit, offset, sort: 'weight,-creation_date' }
     try {
-      const data = await $fetch('/api/v1/announcements', { query })
-      return { total: data.total, announcements: data.items }
+      const { data } = await useFetch('https://preview.mahali.me/api/v1/announcements', { query })
+      return { total: data.value.total, announcements: data.value.items }
     }
     catch(err) {
       throw new Error('Failed to fetch partners: Unknow error')

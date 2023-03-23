@@ -1,11 +1,9 @@
+<script setup lang="ts">
+const postStore = usePostStore()
 
-import UserAvatar from '~~/components/post/user/UserAvatar.vue';
+postStore.getPosts()
+</script>
 
 <template>
-  <div class="p-4">
-    <h1 class="fw-bold">
-      {{ $t("WELCOME") }}
-    </h1>
-    <PostList />
-  </div>
+  <PostList />
 </template>
