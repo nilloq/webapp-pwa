@@ -1,22 +1,19 @@
 <script setup lang="ts">
 const postStore = usePostStore()
-const productStore = useProductStore()
 
-const isLoading = ref(true)
+const isLoading = ref(false)
 
-const props = defineProps({
-  mode: { type: String, default: 'post' }
-})
-
-// props.mode === 'post' ? postStore.getPosts() : productStore.getProducts()
-
-isLoading.value = false
+// onMounted(async() => {
+if (!postStore.total) {
+  isLoading.value = true
+  await postStore.getPosts()
+  isLoading.value = false
+}
+// })
 
 async function loadMore() {
-  // await postStore.getPosts()
-  return
+  await postStore.getPosts(true)
 }
-
 </script>
 
 <template>
@@ -29,19 +26,8 @@ async function loadMore() {
         <PostCardLoading />
       </div>
       <div v-else>
-        <div v-if="mode === 'post'">
-          <div v-for="post in postStore.posts" :key="post.id">
-            <NuxtLink :to="`/post/${post.id}`">
-              <PostCard :post="post" class="mb-4" />
-            </NuxtLink>
-          </div>
-        </div>
-        <div v-else>
-          <div v-for="post in productStore.products" :key="post.id">
-            <NuxtLink :to="`/sell/${post.id}`">
-              <PostCard :post="post" class="mb-4" />
-            </NuxtLink>
-          </div>
+        <div v-for="post in postStore.posts" :key="post.id">
+          <PostCard :post="post" class="mb-4" />
         </div>
         <ScrollLoader v-if="postStore.hasMore" class="max-w-xl" @load="loadMore" />
       </div>

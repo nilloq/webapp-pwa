@@ -1,9 +1,5 @@
-<script setup lang="ts">
-const productStore = useProductStore()
-
-productStore.getProducts()
-</script>
-
 <template>
-  <PostList mode="product" />
+  <div>
+    <h1>Vendre</h1>
+  </div>
 </template>

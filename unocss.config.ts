@@ -20,7 +20,8 @@ export default defineConfig({
   ],
   shortcuts: {
     // shortcuts to multiple utilities
-    'no-outline': 'decoration-none outline-none link-color-inherit hover-color-inherit visited-color-inherit active-color-inherit'
+    'no-outline': 'decoration-none outline-none link-color-inherit hover-color-inherit visited-color-inherit active-color-inherit',
+    'btn': 'text-white bg-primary border-rd-2 px-6 py-2 fw-500'
   },
   presets: [
     presetUno(),

@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt'
   ],
   imports: {
-    dirs: ['stores']
+    dirs: ['stores', 'services']
   },
   // runtimeConfig: {
   //   public: {
@@ -31,14 +31,14 @@ export default defineNuxtConfig({
   // },
   css: [
     '@unocss/reset/tailwind.css',
-    '@/assets/main.scss'
+    '@/assets/styles/main.scss'
   ],
   sourcemap: {
     server: true,
     client: false
   },
   i18n: {
-    defaultLocale: 'en',
+    defaultLocale: 'fr',
     langDir: 'lang',
     locales: [
       { code: 'en', iso: 'en-GB', file: 'en.json' },
