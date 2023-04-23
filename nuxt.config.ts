@@ -10,9 +10,11 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@vite-pwa/nuxt'
   ],
+
   imports: {
     dirs: ['stores', 'services']
   },
+
   // runtimeConfig: {
   //   public: {
   //     baseURL: process.env.BASE_URL || 'https://localhost:3000/api/v1'
@@ -33,10 +35,12 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind.css',
     '@/assets/styles/main.scss'
   ],
+
   sourcemap: {
     server: true,
     client: false
   },
+
   i18n: {
     defaultLocale: 'fr',
     langDir: 'lang',
@@ -50,6 +54,7 @@ export default defineNuxtConfig({
     },
     vueI18n: './i18n.config.ts'
   },
+
   pinia: {
     autoImports: [
       // automatically imports `defineStore`
@@ -57,6 +62,7 @@ export default defineNuxtConfig({
       ['defineStore', 'definePiniaStore'] // import { defineStore as definePiniaStore } from 'pinia'
     ]
   },
+
   pwa: {
     mode: 'development',
     base: '/',
@@ -208,5 +214,7 @@ export default defineNuxtConfig({
         }
       ]
     }
-  }
+  },
+
+  devtools: false
 })
