@@ -1,23 +1,18 @@
-import { UseFetchOptions } from '#app'
-import { NitroFetchRequest } from 'nitropack'
-import { KeyOfRes } from 'nuxt/dist/app/composables/asyncData'
-
-export function useMyFetch<T>(
-  request: NitroFetchRequest,
-  opts?:
-    | UseFetchOptions<
-        T extends void ? unknown : T,
-        (res: T extends void ? unknown : T) => T extends void ? unknown : T,
-        KeyOfRes<
-          (res: T extends void ? unknown : T) => T extends void ? unknown : T
-        >
-      >
-    | undefined
-) {
+export const useApiFetch: typeof useFetch = (request, opts)=>{
   const config = useRuntimeConfig()
-
-  return useFetch<T>(request, {
-    baseURL: config.public.baseURL,
-    ...opts
-  })
+  return useFetch(request, { baseURL: config.public.baseApiUrl,
+    onRequest({ request, options }) {
+      // Set the request headers
+    },
+    onRequestError({ request, options, error }) {
+      // Handle the request errors
+    },
+    onResponse({ request, response, options }) {
+      // Process the response data
+      return response._data
+    },
+    onResponseError({ request, response, options }) {
+      // Handle the response errors
+    },
+    ...opts })
 }

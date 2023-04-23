@@ -2,7 +2,11 @@
 import type { Post } from '@/services/model/post.model'
 import type { User } from '@/services/model/user.model'
 
+definePageMeta({ layout: 'full' })
+
 const { t } = useI18n()
+const route = useRoute()
+const router = useRouter()
 const postStore = usePostStore()
 
 const post = ref<Post | null>()
@@ -10,22 +14,29 @@ const isLoadingSeller = ref(true)
 const seller = ref<User | undefined>()
 const imageError = ref(false)
 
+post.value = await postStore.getPostById(route.params.id as string)
+
+if (post.value) {
+  useHead({
+    title: post.value?.productName ?? t('POSTS__NEWS_TITLE'),
+    meta: [
+      { name: 'description', content: post.value.description },
+      { property: 'og:description', content: post.value.description },
+      { property: 'og:image', content: post.value?.images??[0] },
+      { name: 'twitter:card', content: 'summary_large_image' }
+    ]
+  })
+  // Load the seller details
+  // seller.value = post.value.sellerId ? await UserService.getUserPublicInformation(post.value.sellerId) : undefined
+  isLoadingSeller.value = false
+}
+else { router.replace('/post/deleted') }
+
 // For the moment, we consider a post is an article if it has a price
 const isArticle = computed(() => !!post.value?.productPriceOriginal)
 
 // Return true is the current connected user is the publisher of the post
 // const isPublisher = computed(() => post.value?.sellerId === userStore.getUserId)
-
-onMounted(async() => {
-  // post.value = await postStore.getPostById(route.params.id as string)
-  post.value = null
-  if (post.value) {
-    // Load the seller details
-    // seller.value = post.value.sellerId ? await UserService.getUserPublicInformation(post.value.sellerId) : undefined
-    isLoadingSeller.value = false
-  }
-  else { await navigateTo('/post/deleted', { replace: true }) }
-})
 
 
 // function showSeller() {
@@ -52,7 +63,7 @@ onMounted(async() => {
 </script>
 
 <template>
-  <div class="container p-0 pb-120px flex flex-col sm:flex-row">
+  <div class="container pb-120px flex flex-col sm:flex-row">
     <!-- pictures -->
     <div v-if="post?.images?.length && !imageError" class="w-full sm:w-50%">
       <img

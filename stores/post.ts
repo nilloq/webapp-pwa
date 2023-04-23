@@ -23,15 +23,13 @@ export const usePostStore = defineStore('post', () => {
   }
 
 
-  // async function getPostById(id: string) {
-  //   const post = posts.value.find(item => item.id === id);
-  //   if (post)
-  //     return post;
-
-  //   else
-  //     return await PostService.getById(id);
-
-  // }
+  async function getPostById(id: string) {
+    const post = posts.value.find(item => item.id === id)
+    if (post)
+      return post
+    else
+      return await PostService.getById(id)
+  }
 
   // async function deletePostById(id: string) {
   //   const deleted = await PostService.deleteById(id);
@@ -47,6 +45,6 @@ export const usePostStore = defineStore('post', () => {
   // }
 
   // return { posts, total, hasMore, getPosts, getPostById, deletePostById }
-  return { posts, total, hasMore, getPosts }
+  return { posts, total, hasMore, getPosts, getPostById }
 }
 )

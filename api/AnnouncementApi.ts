@@ -1,5 +1,10 @@
 
-import type { GetAnnoucementApiResponse } from './dto/announcement.dto'
+import type { AnnouncementDto, GetAnnoucementApiResponse } from './dto/announcement.dto'
+
+interface ApiResponse {
+  total: number;
+  items: []
+}
 
 class AnnouncementApi {
   // Get announcements for a given country
@@ -8,14 +13,16 @@ class AnnouncementApi {
     // Default sort by weight then by creation date
     params.append('sort', '-weight,-creation_date')
     const query = { country, limit, offset, sort: 'weight,-creation_date' }
-    try {
-      const { data } = await useFetch('https://preview.mahali.me/api/v1/announcements', { query })
-      return { total: data.value.total, announcements: data.value.items }
-    }
-    catch(err) {
-      throw new Error('Failed to fetch partners: Unknow error')
-    }
+    const { data } = await useApiFetch('/announcements', { query })
+    const res = data.value as ApiResponse
+    return { total: res.total, announcements: res.items }
   }
 
+  // Get an announcement from its Id
+  async getById(id: string):Promise<AnnouncementDto> {
+    const { data } = await useApiFetch(`/announcements/${id}`, { key: id })
+    const post = data.value as AnnouncementDto
+    return post
+  }
 }
 export default new AnnouncementApi()

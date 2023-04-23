@@ -15,22 +15,12 @@ export default defineNuxtConfig({
     dirs: ['stores', 'services']
   },
 
-  // runtimeConfig: {
-  //   public: {
-  //     baseURL: process.env.BASE_URL || 'https://localhost:3000/api/v1'
-  //   }
-  // },
-  // vite: {
-  //   server: {
-  //     proxy: {
-  //       '/api/v1': {
-  //         target: 'https://preview.mahali.me/',
-  //         changeOrigin: true,
-  //         secure: false
-  //       }
-  //     }
-  //   }
-  // },
+  runtimeConfig: {
+    public: {
+      baseApiUrl: process.env.BASE_API_URL || 'https://api.mahali.me/api/v1'
+    }
+  },
+
   css: [
     '@unocss/reset/tailwind.css',
     '@/assets/styles/main.scss'

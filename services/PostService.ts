@@ -58,15 +58,15 @@ class PostService {
     }
   }
 
-  // async getById(id: string): Promise<Post | null> {
-  //   try {
-  //     const response:AnnouncementDto = await announcementApi.getById(id)
-  //     return PostService.#toPost(response)
-  //   }
-  //   catch {
-  //     return null
-  //   }
-  // }
+  async getById(id: string): Promise<Post | null> {
+    try {
+      const response:AnnouncementDto = await announcementApi.getById(id)
+      return PostService.#toPost(response)
+    }
+    catch {
+      return null
+    }
+  }
 
   // // Create a new post
   // async post(post: Post): Promise<Post | null> {
