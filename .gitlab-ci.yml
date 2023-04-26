@@ -8,12 +8,12 @@ include:
   # Docker template
   # https://gitlab.tech.orange/to-be-continuous/docker
   - project: "to-be-continuous/docker"
-    ref: "3.5.2"
+    ref: "4.0.0"
     file: "templates/gitlab-ci-docker.yml"
   # OpenShift template
   # https://gitlab.tech.orange/to-be-continuous/openshift
   - project: "to-be-continuous/openshift"
-    ref: "2.2.4"
+    ref: "3.0.0"
     file: "/templates/gitlab-ci-openshift.yml"
 
 # secret variables
@@ -26,12 +26,12 @@ include:
 # variables
 variables:
   #node
-  NODE_IMAGE: "dockerproxy.tech.orange/node:lts-alpine"
+  NODE_IMAGE: "dockerproxy.repos.tech.orange/node:lts-alpine"
   NODE_LINT_ENABLED: "true"
   NODE_BUILD_DIR: ".output"
 
   # docker
-  DOCKER_DOCKERFILE_PATH: docker
+  DOCKER_FILE: "docker/Dockerfile"
   DOCKER_HADOLINT_DISABLED: "true"
   DOCKER_HEALTHCHECK_DISABLED: "true"
   DOCKER_TRIVY_DISABLED: "true"
