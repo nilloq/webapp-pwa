@@ -17,7 +17,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseApiUrl: process.env.BASE_API_URL || 'https://api.mahali.me/api/v1'
+      apiBaseUrl: 'https://api.mahali.me/api/v1'
     }
   },
 

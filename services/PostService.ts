@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import announcementApi from '@/api/AnnouncementApi'
-import type { AnnouncementDto, GetAnnoucementApiResponse } from '@/api/dto/announcement.dto'
+import type { AnnouncementDto, AnnouncementViewDto, GetAnnoucementApiResponse } from '@/api/dto/announcement.dto'
 import type { Post, GetPostsResponse } from './model/post.model'
 import { useFile } from '@/composables/file'
 
@@ -8,50 +8,38 @@ const { getCloudinaryImageUrl, getCloudinarySquareImageUrl, getCloudinaryShortLi
 
 class PostService {
 
-  static #toPost(announcementDto:AnnouncementDto):Post {
-    const image = announcementDto.images?.length ? getCloudinaryImageUrl(announcementDto.images[0], 'mahali_post') : undefined
-    const sellerPicture = announcementDto.user?.picture ? getCloudinarySquareImageUrl(announcementDto.user?.picture) : ''
+  static #announcementDtoToPost(announcementViewDto:AnnouncementDto):Post {
+    const image = announcementViewDto.images?.length
+      ? getCloudinaryImageUrl(announcementViewDto.images[0], 'mahali_post') : undefined
     return {
-      id: announcementDto.id,
-      sellerCompanyName: announcementDto.user?.seller?.company_name ?? '',
-      sellerAvatarUrl: sellerPicture,
-      sellerId: announcementDto.user_id,
-      sellerPostCount: announcementDto.number_announcement,
+      id: announcementViewDto.id,
+      sellerId: announcementViewDto.user_id,
       images: image ? [image] : undefined,
-      description: announcementDto.text ?? '',
-      productName: announcementDto.title,
-      productPriceOriginal: announcementDto.price_original,
-      productPriceDiscount: announcementDto.price_discount,
-      currency: announcementDto.currency,
-      weight: announcementDto.weight,
-      status: announcementDto.status
+      description: announcementViewDto.text ?? '',
+      productName: announcementViewDto.title,
+      productPriceOriginal: announcementViewDto.price_original,
+      productPriceDiscount: announcementViewDto.price_discount,
+      currency: announcementViewDto.currency,
+      weight: announcementViewDto.weight,
+      status: announcementViewDto.status
     }
   }
 
-  static #toAnnouncementDto(post:Post):AnnouncementDto {
-    const imageLink = post.images?.length ? getCloudinaryShortLink(post.images[0], 'mahali_post') : undefined
-    return {
-      country: post.country ?? '',
-      end_date: {
-        seconds: Math.round((post.endDate?.valueOf() ?? 0) / 1000),
-        nanos: 0
-      },
-      currency: post.currency,
-      id: post.id,
-      images: imageLink ? [imageLink] : undefined,
-      text: post.description,
-      title: post.productName,
-      price_original: post.productPriceOriginal,
-      price_discount: post.productPriceDiscount,
-      weight: post.weight,
-      status: post.status
+  static #announcementViewDtoToPost(announcementViewDto:AnnouncementViewDto):Post {
+    const sellerPicture = announcementViewDto.user?.picture ? getCloudinarySquareImageUrl(announcementViewDto.user?.picture) : ''
+    const post = {
+      ...PostService.#announcementDtoToPost(announcementViewDto.announcement),
+      sellerCompanyName: announcementViewDto.user?.seller?.company_name ?? '',
+      sellerAvatarUrl: sellerPicture,
+      sellerPostCount: announcementViewDto.number_announcement
     }
+    return post
   }
 
   async get({ country, limit = 5, offset = 0 }:{country: string, limit?:number, offset?: number}): Promise<GetPostsResponse> {
     try {
       const response:GetAnnoucementApiResponse = await announcementApi.get({ country, limit, offset })
-      return { total: response.total, posts: response.announcements.map(PostService.#toPost) }
+      return { total: response.total, posts: response.announcements.map(PostService.#announcementViewDtoToPost) }
     }
     catch {
       return { total: 0, posts: [] }
@@ -60,8 +48,8 @@ class PostService {
 
   async getById(id: string): Promise<Post | null> {
     try {
-      const response:AnnouncementDto = await announcementApi.getById(id)
-      return PostService.#toPost(response)
+      const response:AnnouncementViewDto = await announcementApi.getById(id)
+      return PostService.#announcementViewDtoToPost(response)
     }
     catch {
       return null

@@ -15,20 +15,24 @@ export interface AnnouncementDto {
   currency?: string;
   id?: string;
   images?: string[];
-  number_announcement?: number;
   title?: string;
   price_discount?: number;
   price_original?: number;
   product_id?: string;
   text: string;
-  user?: AnnouncementSellerDto;
-  user_alias?: UserAlias[];
   user_id?: string;
   weight: number,
   status: 'active' | 'deleted'
 }
 
+export interface AnnouncementViewDto {
+  announcement: AnnouncementDto;
+  number_announcement?: number;
+  user?: AnnouncementSellerDto;
+  user_alias?: UserAlias[];
+}
+
 export interface GetAnnoucementApiResponse {
   total: number,
-  announcements: AnnouncementDto[]
+  announcements: AnnouncementViewDto[]
 }
