@@ -21,6 +21,12 @@ export default defineNuxtConfig({
     }
   },
 
+  nitro: {
+    routeRules: {
+      '/api/v1': { proxy: 'https://mahali-mvp-dev.apps.fr01.paas.tech.orange/' }
+    }
+  },
+
   css: [
     '@unocss/reset/tailwind.css',
     '@/assets/styles/main.scss'
