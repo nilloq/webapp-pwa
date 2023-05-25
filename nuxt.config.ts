@@ -15,15 +15,16 @@ export default defineNuxtConfig({
     dirs: ['stores', 'services']
   },
 
-  runtimeConfig: {
-    public: {
-      apiBaseUrl: 'https://api.mahali.me/api/v1'
-    }
-  },
+  // runtimeConfig: {
+  //   public: {
+  //     apiBaseUrl: 'https://api.mahali.me'
+  //   }
+  // },
 
   nitro: {
     routeRules: {
-      '/api/v1': { proxy: 'https://mahali-mvp-dev.apps.fr01.paas.tech.orange/' }
+      // '/api/v1/**': { proxy: 'https://preview.mahali.me/api/v1/**' }
+      '/api/v1': { proxy: 'https://mahali-mvp-dev.apps.fr01.paas.tech.orange/api/v1' }
     }
   },
 
