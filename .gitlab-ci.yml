@@ -3,17 +3,17 @@ include:
   # Node.js template
   # https://gitlab.tech.orange/to-be-continuous/node
   - project: "to-be-continuous/node"
-    ref: "3.5.2"
+    ref: "3.6.0"
     file: "templates/gitlab-ci-node.yml"
   # Docker template
   # https://gitlab.tech.orange/to-be-continuous/docker
   - project: "to-be-continuous/docker"
-    ref: "4.0.0"
+    ref: "5.2.0"
     file: "templates/gitlab-ci-docker.yml"
   # OpenShift template
   # https://gitlab.tech.orange/to-be-continuous/openshift
   - project: "to-be-continuous/openshift"
-    ref: "3.0.0"
+    ref: "3.1.0"
     file: "/templates/gitlab-ci-openshift.yml"
 
 # secret variables
@@ -29,6 +29,7 @@ variables:
   NODE_IMAGE: "dockerproxy.repos.tech.orange/node:lts-alpine"
   NODE_LINT_ENABLED: "true"
   NODE_BUILD_DIR: ".output"
+  NODE_AUDIT_DISABLED: "true"
 
   # docker
   DOCKER_FILE: "docker/Dockerfile"
