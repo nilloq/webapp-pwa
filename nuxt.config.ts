@@ -14,12 +14,16 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['stores', 'services']
   },
-
-  // runtimeConfig: {
-  //   public: {
-  //     apiBaseUrl: 'https://api.mahali.me'
-  //   }
-  // },
+  routeRules: {
+    '/demo/spa': { ssr: false },
+    '/demo/static': { static: true },
+    '/demo/swr': { swr: true }
+  },
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: 'https://api.mahali.me'
+    }
+  },
 
   nitro: {
     routeRules: {
