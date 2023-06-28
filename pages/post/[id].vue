@@ -65,22 +65,22 @@ const isArticle = computed(() => !!post.value?.productPriceOriginal)
 <template>
   <div class="container pb-120px flex flex-col sm:flex-row">
     <!-- pictures -->
-    <div v-if="post?.images?.length && !imageError" class="w-full sm:w-50%">
+    <div v-if="postStore.post?.images?.length && !imageError" class="w-full sm:w-50%">
       <img
-        :src="post.images[0]"
+        :src="postStore.post?.images[0]"
         loading="lazy"
         class="aspect-square sm:aspect-auto object-cover"
         @error="imageError = true"
       >
     </div>
-    <div class="w-100%" :class="{'sm:w-50%': post?.images?.length && !imageError}">
+    <div class="w-100%" :class="{'sm:w-50%': postStore.post?.images?.length && !imageError}">
       <!-- description -->
       <div class="p-4 border-b-1 border-b-solid border-silver max-w-2xl">
         <p class="mb-2">
-          {{ post?.description }}
+          {{ postStore.post?.description }}
         </p>
         <!-- Prices -->
-        <PostProductPrice v-if="post" :post="post" />
+        <PostProductPrice v-if="postStore.post" :post="postStore.post" />
       </div>
       <!-- seller information -->
       <!-- <ShopCard

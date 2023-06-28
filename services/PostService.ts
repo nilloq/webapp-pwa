@@ -1,10 +1,9 @@
 /* eslint-disable camelcase */
 import announcementApi from '@/api/AnnouncementApi'
-import type { AnnouncementDto, AnnouncementViewDto, GetAnnoucementApiResponse } from '@/api/dto/announcement.dto'
-import type { Post, GetPostsResponse } from './model/post.model'
-import { useFile } from '@/composables/file'
+import type { AnnouncementDto, AnnouncementPatchDto, AnnouncementViewDto, GetAnnoucementApiResponse } from '@/api/dto/announcement.dto'
+import type { Post, GetPostsResponse, PostPatch } from './model/post.model'
 
-const { getCloudinaryImageUrl, getCloudinarySquareImageUrl, getCloudinaryShortLink } = useFile()
+const { getCloudinaryImageUrl, getCloudinarySquareImageUrl, getCloudinaryShortLink } = useCloudinary()
 
 class PostService {
 
@@ -17,7 +16,7 @@ class PostService {
       images: image ? [image] : undefined,
       description: announcementViewDto.text ?? '',
       productName: announcementViewDto.title,
-      productPriceOriginal: announcementViewDto.price_original,
+      productPriceOriginal: announcementViewDto.price ? announcementViewDto.price + (announcementViewDto.price_discount ?? 0) : undefined,
       productPriceDiscount: announcementViewDto.price_discount,
       currency: announcementViewDto.currency,
       weight: announcementViewDto.weight,
@@ -31,14 +30,46 @@ class PostService {
       ...PostService.#announcementDtoToPost(announcementViewDto.announcement),
       sellerCompanyName: announcementViewDto.user?.seller?.company_name ?? '',
       sellerAvatarUrl: sellerPicture,
-      sellerPostCount: announcementViewDto.number_announcement
+      sellerPostCount: announcementViewDto.number_announcement,
+      sellerAlias: announcementViewDto.user_alias?.length ? announcementViewDto.user_alias[0].alias : undefined
     }
     return post
   }
 
-  async get({ country, limit = 5, offset = 0 }:{country: string, limit?:number, offset?: number}): Promise<GetPostsResponse> {
+  static #postToAnnouncementDto(post:Post):AnnouncementDto {
+    const imageLink = post.images?.length ? getCloudinaryShortLink(post.images[0], 'mahali_post') : undefined
+    return {
+      country: post.country ?? '',
+      end_date: {
+        seconds: Math.round((post.endDate?.valueOf() ?? 0) / 1000),
+        nanos: 0
+      },
+      currency: post.currency,
+      id: post.id,
+      images: imageLink ? [imageLink] : undefined,
+      text: post.description,
+      title: post.productName,
+      price_discount: post.productPriceDiscount,
+      price: post.productPriceOriginal ? post.productPriceOriginal - (post.productPriceDiscount ?? 0) : undefined,
+      weight: post.weight,
+      status: post.status
+    }
+  }
+  static #postPatchToAnnouncementPatchDto(postPatch:PostPatch):AnnouncementPatchDto {
+    const imageLink = postPatch.images?.length ? getCloudinaryShortLink(postPatch.images[0], 'mahali_post') : undefined
+    return {
+      id: postPatch.id,
+      images: imageLink ? [imageLink] : undefined,
+      text: postPatch.description,
+      title: postPatch.productName,
+      price_discount: postPatch.productPriceDiscount,
+      price: postPatch.productPriceOriginal ? postPatch.productPriceOriginal - (postPatch.productPriceDiscount ?? 0) : undefined
+    }
+  }
+
+  async get({ userId, country, limit = 5, offset = 0 }:{userId?: string, country?: string, limit?:number, offset?: number}): Promise<GetPostsResponse> {
     try {
-      const response:GetAnnoucementApiResponse = await announcementApi.get({ country, limit, offset })
+      const response:GetAnnoucementApiResponse = await announcementApi.get({ userId, country, limit, offset })
       return { total: response.total, posts: response.announcements.map(PostService.#announcementViewDtoToPost) }
     }
     catch {
@@ -59,21 +90,32 @@ class PostService {
   // // Create a new post
   // async post(post: Post): Promise<Post | null> {
   //   try {
-  //     const response = await announcementApi.post(PostService.#toAnnouncementDto(post))
-  //     return PostService.#toPost(response)
+  //     const response = await announcementApi.post(PostService.#postToAnnouncementDto(post));
+  //     return PostService.#announcementDtoToPost(response);
   //   }
   //   catch {
-  //     return null
+  //     return null;
+  //   }
+  // }
+
+  // // Update an existing post
+  // async update(postPatch: PostPatch): Promise<Post | null> {
+  //   try {
+  //     const response = await announcementApi.patch(PostService.#postPatchToAnnouncementPatchDto(postPatch));
+  //     return PostService.#announcementDtoToPost(response);
+  //   }
+  //   catch {
+  //     return null;
   //   }
   // }
 
   // async deleteById(id: string): Promise<boolean> {
   //   try {
-  //     await announcementApi.delete(id)
-  //     return true
+  //     await announcementApi.delete(id);
+  //     return true;
   //   }
   //   catch {
-  //     return false
+  //     return false;
   //   }
   // }
 }

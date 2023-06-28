@@ -1,0 +1,71 @@
+{
+  "countries" : [
+    {
+      "code": "CI",
+      "config" : {
+        "currency" : "XOF",
+        "minPrice": 200,
+        "maxPrice" : 1000000,
+        "stepPrice" : 5,
+        "phonePrefix" : "225",
+        "phoneNumberSize": "10",
+        "phoneNumberStripZero": false,
+        "omUssdOrders" : "#144*436*3#",
+        "omUssdPayment": "#144*436*4"
+      }
+    },
+    {
+      "code": "CM",
+      "config" : {
+        "currency" : "XOF",
+        "phonePrefix" : "237",
+        "phoneNumberSize": "9",
+        "phoneNumberStripZero": false
+      }
+    },
+    {
+      "code": "GN",
+      "config" : {
+        "currency" : "GNF",
+        "phonePrefix" : "224",
+        "phoneNumberSize": "9",
+        "phoneNumberStripZero": false
+      }
+    },
+    {
+      "code": "MG",
+      "config" : {
+        "currency" : "MGA",
+        "minPrice": 200,
+        "maxPrice" : 10000000,
+        "stepPrice" : 5,
+        "phonePrefix" : "261",
+        "phoneNumberSize": "9",
+        "phoneNumberStripZero": true,
+        "omUssdOrders" : "#944*19#",
+        "omUssdPayment": "#944*19#"
+      }
+    },
+    {
+      "code": "ML",
+      "config" : {
+        "currency" : "XOF",
+        "phonePrefix" : "223",
+        "phoneNumberSize": "8",
+        "phoneNumberStripZero": false
+      }
+    },
+    {
+      "code": "SN",
+      "config" : {
+        "currency" : "XOF",
+        "phonePrefix" : "221",
+        "phoneNumberSize": "9",
+        "phoneNumberStripZero": false
+      }
+    }
+  ],
+
+  "languages" : ["fr", "en", "mg", "zh"]
+}
+

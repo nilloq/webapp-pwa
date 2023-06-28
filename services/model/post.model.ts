@@ -3,6 +3,7 @@ export interface Post {
   sellerCompanyName?: string;
   sellerAvatarUrl?: string;
   sellerId?: string;
+  sellerAlias?: string,
   sellerPostCount?: number,
   images?: string[];
   description: string;
@@ -15,6 +16,16 @@ export interface Post {
   weight: number,
   status: 'active' | 'deleted'
 }
+
+export interface PostPatch {
+  id?: string;
+  images?: string[];
+  description: string;
+  productName?: string;
+  productPriceOriginal?: number;
+  productPriceDiscount?: number;
+}
+
 
 export interface GetPostsResponse {
   total: number

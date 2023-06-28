@@ -8,8 +8,9 @@ interface ApiResponse {
 
 class AnnouncementApi {
   // Get announcements for a given country
-  async get({ country, limit = 10, offset = 0 }:{country: string, limit:number, offset: number}):Promise<GetAnnoucementApiResponse> {
-    const query = { country, limit, offset, sort: '-announcement.weight,-announcement.creation_date' }
+  async get({ userId, country, limit = 10, offset = 0 }:{userId?: string, country?: string, limit:number, offset: number}):Promise<GetAnnoucementApiResponse> {
+    let query:any = { country, limit, offset, sort: '-announcement.weight,-announcement.creation_date' }
+    if (userId) query = { userId, ...query }
     const { data } = await useApiFetch('/api/v1/announcements', { query })
     const res = data.value as ApiResponse
     return { total: res.total, announcements: res.items }

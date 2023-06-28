@@ -17,12 +17,21 @@ export interface AnnouncementDto {
   images?: string[];
   title?: string;
   price_discount?: number;
-  price_original?: number;
+  price?: number;
   product_id?: string;
   text: string;
   user_id?: string;
   weight: number,
   status: 'active' | 'deleted'
+}
+
+export interface AnnouncementPatchDto {
+  id?: string;
+  images?: string[];
+  title?: string;
+  price_discount?: number;
+  price?: number;
+  text: string;
 }
 
 export interface AnnouncementViewDto {

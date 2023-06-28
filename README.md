@@ -68,7 +68,6 @@ For typo or document changes, use `docs:` or `chore:` instead:
 
 - ~~`fix: typo`~~ -> `docs: fix typo`
 
-
 ## Built With
 
 Tools thatare used to build your application.
@@ -80,6 +79,7 @@ Tools thatare used to build your application.
 ## Authors
 
 - **[Samuel Collin](https://gitlab.tech.orange/samuel.collin)**
+
   - Webapp developer
 
 - **[Nicolas Bossard](https://gitlab.tech.orange/nicolas.bossard)**
