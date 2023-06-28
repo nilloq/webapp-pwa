@@ -13,7 +13,7 @@ const imageError = ref(false)
 const options = ref({
   title: props.post.sellerCompanyName,
   text: props.post.description,
-  url: isClient ? `${location.href}/post/${props.post.id}` : ''
+  url: isClient ? `${location.href}post/${props.post.id}` : ''
 })
 
 const { share, isSupported } = useShare(options)
