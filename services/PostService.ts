@@ -9,7 +9,7 @@ class PostService {
 
   static #announcementDtoToPost(announcementViewDto:AnnouncementDto):Post {
     const image = announcementViewDto.images?.length
-      ? getCloudinaryImageUrl(announcementViewDto.images[0], 'mahali_post') : undefined
+      ? getCloudinaryImageUrl(announcementViewDto.images[0], 'post') : undefined
     return {
       id: announcementViewDto.id,
       sellerId: announcementViewDto.user_id,
@@ -37,7 +37,7 @@ class PostService {
   }
 
   static #postToAnnouncementDto(post:Post):AnnouncementDto {
-    const imageLink = post.images?.length ? getCloudinaryShortLink(post.images[0], 'mahali_post') : undefined
+    const imageLink = post.images?.length ? getCloudinaryShortLink(post.images[0], 'post') : undefined
     return {
       country: post.country ?? '',
       end_date: {
@@ -56,7 +56,7 @@ class PostService {
     }
   }
   static #postPatchToAnnouncementPatchDto(postPatch:PostPatch):AnnouncementPatchDto {
-    const imageLink = postPatch.images?.length ? getCloudinaryShortLink(postPatch.images[0], 'mahali_post') : undefined
+    const imageLink = postPatch.images?.length ? getCloudinaryShortLink(postPatch.images[0], 'post') : undefined
     return {
       id: postPatch.id,
       images: imageLink ? [imageLink] : undefined,

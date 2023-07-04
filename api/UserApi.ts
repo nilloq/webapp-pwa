@@ -8,7 +8,7 @@ class UserApi {
 
   // Retrieve public information of a given user (silently fails if not found)
   async getUserPublicInformation(userId: string): Promise<UserDto | undefined> {
-    const { data } = await useApiFetch(`/users/${userId}/public`)
+    const { data } = await useApiFetch(`/api/v1/users/${userId}/public`)
     return data.value as UserDto
   }
 

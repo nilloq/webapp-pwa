@@ -1,42 +1,38 @@
 <script setup lang="ts">
-defineProps({
-  avatarUrl: { type: String, default: undefined }
+
+const props = defineProps({
+  avatarUrl: { type: String, default: undefined },
+  size: { type: Number, default: 32 }
 })
+
 const avatarImageError = ref(false)
+
+const avatarStyle = computed(() => ({
+  'height': `${props.size}px`,
+  'width': `${props.size}px`,
+  'min-width': `${props.size}px`
+}))
+
 </script>
 
 <template>
   <div class="flex items-center">
-    <div v-if="avatarUrl && !avatarImageError" class="user-avatar">
+    <div
+      v-if="avatarUrl && !avatarImageError"
+      class="overflow-hidden flex items-center justify-center border-rd-50% bg-secondary"
+      :style="avatarStyle"
+    >
       <img
-        class="asset-team-maintainers__avatar__image"
         :src="avatarUrl"
         loading="lazy"
+        class="object-cover w-100% h-100%"
         @error="avatarImageError = true"
       >
     </div>
     <div
       v-else
-      class="user-avatar fw-bold bg-black opacity-4"
+      class="overflow-hidden flex items-center justify-center border-rd-50% bg-secondary"
+      :style="avatarStyle"
     />
   </div>
 </template>
-
-<style lang="scss" scoped>
- .user-avatar {
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      height: 32px;
-      min-width: 32px;
-      max-width: 32px;
-
-      &__image {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-      }
-    }
-</style>

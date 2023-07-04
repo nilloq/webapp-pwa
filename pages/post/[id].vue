@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Post } from '@/services/model/post.model'
 import type { User } from '@/services/model/user.model'
 
 definePageMeta({ layout: 'full' })
@@ -9,31 +8,30 @@ const route = useRoute()
 const router = useRouter()
 const postStore = usePostStore()
 
-const post = ref<Post | null>()
 const isLoadingSeller = ref(true)
 const seller = ref<User | undefined>()
 const imageError = ref(false)
 
-post.value = await postStore.getPostById(route.params.id as string)
+await postStore.getPostById(route.params.id as string)
 
-if (post.value) {
+if (postStore.post) {
   useHead({
-    title: post.value?.productName ?? t('POSTS__NEWS_TITLE'),
+    title: postStore.post.productName ?? t('POSTS__NEWS_TITLE'),
     meta: [
-      { name: 'description', content: post.value.description },
-      { property: 'og:description', content: post.value.description },
-      { property: 'og:image', content: post.value?.images??[0] },
+      { name: 'description', content: postStore.post.description },
+      { property: 'og:description', content: postStore.post.description },
+      { property: 'og:image', content: postStore.post.images??[0] },
       { name: 'twitter:card', content: 'summary_large_image' }
     ]
   })
   // Load the seller details
-  // seller.value = post.value.sellerId ? await UserService.getUserPublicInformation(post.value.sellerId) : undefined
+  seller.value = postStore.post.sellerId ? await UserService.getUserPublicInformation(postStore.post.sellerId) : undefined
   isLoadingSeller.value = false
 }
 else { router.replace('/post/deleted') }
 
-// For the moment, we consider a post is an article if it has a price
-const isArticle = computed(() => !!post.value?.productPriceOriginal)
+// For the moment, we consider a post is a prodcut if it has a price
+const isProduct = computed(() => !!postStore.post?.productPriceOriginal)
 
 // Return true is the current connected user is the publisher of the post
 // const isPublisher = computed(() => post.value?.sellerId === userStore.getUserId)
@@ -83,15 +81,25 @@ const isArticle = computed(() => !!post.value?.productPriceOriginal)
         <PostProductPrice v-if="postStore.post" :post="postStore.post" />
       </div>
       <!-- seller information -->
-      <!-- <ShopCard
-        :title="t('GENERAL__SELLER')"
-        :user="seller"
-        :post-count="post?.sellerPostCount"
-        :is-loading="isLoadingSeller"
-        class="max-w-2xl m-initial"
-        @click="showSeller"
-      /> -->
+      <div class="p-4">
+        <ShopCard
+          :title="t('GENERAL__SELLER')"
+          :user="seller"
+          :post-count="postStore.post?.sellerPostCount"
+          :is-loading="isLoadingSeller"
+          class="max-w-2xl m-initial"
+        />
+      </div>
       <!-- footer -->
+      <div class="w-100% bg-white border-t-1 border-t-solid border-silver sm:border-none z-24 fixed sm:relative left-0 bottom-0">
+        <div class="container p-4 text-center sm:text-left">
+          <RouterLink to="/">
+            <div role="button" class="btn">
+              HOME
+            </div>
+          </RouterLink>
+        </div>
+      </div>
       <!-- <div class="w-100% bg-white border-t-1 border-t-solid border-silver sm:border-none z-24 fixed sm:relative left-0 bottom-0">
         <div class="container text-center sm:text-left">
           <div v-if="isPublisher">
