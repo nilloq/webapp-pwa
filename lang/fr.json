@@ -611,5 +611,6 @@
   "POSTS__DELETE_CONFIRM": "Confirmer la suppression ?",
   "POST__DELETE_SUCCESS": "Ton annonce a été supprimée.",
   "GALLERY__ADD_BUTTON": "AJOUTER PHOTOS",
-  "GALLERY__COUNT_IMAGES": "Photos"
+  "GALLERY__COUNT_IMAGES": "Photos",
+  "HOME__MAIN_BOTTOM_LINK_MENU": "Menu"
 }

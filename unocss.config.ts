@@ -46,14 +46,29 @@ export default defineConfig({
   ],
   theme: {
     colors: {
-      primary: '#0227cc',
-      secondary: '#dfe3f7',
-      alert: '#bc3d46',
-      success: '#03a678',
-      warning: '#f6c244',
-      silver: '#cccccc',
-      lightgrey: '#eeeeee',
-      grey: '#999999'
+      'primary': '#5a69e6',
+      'primary-light': '#9faaf1',
+      'primary-dark': '#242854',
+      'alert': '#c91c00',
+      'success': '#217645',
+      'warning': '#9e5400',
+      'info': '#1068bf',
+      'alert-light': '#fcf1ef',
+      'success-light': '#ecf4ee',
+      'warning-light': '#fdf1dd',
+      'info-light': '#e9f3fc',
+      'grey-1': '#eeeeee',
+      'grey-2': '#dddddd',
+      'grey-3': '#cccccc',
+      'grey-4': '#999999',
+      'grey-5': '#666666',
+      'silver': '#cccccc',
+      // Do not use anymore
+      'secondary': '#dfe3f7',
+      'lightgrey': '#eeeeee',
+      'darkgrey': '#666666',
+      'grey': '#999999',
+      'orange': '#f77f00'
     }
   }
 })
