@@ -106,7 +106,7 @@ class UserService {
     //   break
     // }
     // eslint-disable-next-line no-console
-    console.log('contact user')
+    console.log(`contact user: ${service} / ${recipient} / ${body}`)
   }
 
   // generate a random user nickname

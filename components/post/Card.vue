@@ -10,6 +10,7 @@ const props = defineProps({
 const userAvatarUrl = computed(() => props.post.sellerAvatarUrl ? props.post.sellerAvatarUrl : '/img/seller.svg' )
 const imageError = ref(false)
 
+// eslint-disable-next-line vue/no-setup-props-destructure
 const options = ref({
   title: props.post.sellerCompanyName,
   text: props.post.description,

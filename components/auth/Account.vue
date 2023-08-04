@@ -4,7 +4,7 @@ const supabase = useSupabaseClient()
 const loading = ref(true)
 const username = ref('')
 const website = ref('')
-const avatar_path = ref('')
+const avatarPath = ref('')
 
 loading.value = true
 const user = useSupabaseUser()
@@ -18,7 +18,7 @@ const { data } = await supabase
 if (data) {
   username.value = data.username
   website.value = data.website
-  avatar_path.value = data.avatar_url
+  avatarPath.value = data.avatar_url
 }
 
 loading.value = false
@@ -32,8 +32,8 @@ async function updateProfile() {
       id: user.value.id,
       username: username.value,
       website: website.value,
-      avatar_url: avatar_path.value,
-      updated_at: new Date()
+      avatarUrl: avatarPath.value,
+      updatedAt: new Date()
     }
 
     const { error } = await supabase.from('profiles').upsert(updates, {
@@ -42,7 +42,7 @@ async function updateProfile() {
     if (error) throw error
   }
   catch (error) {
-    alert(error.message)
+    console.warn(error.message)
   }
   finally {
     loading.value = false
@@ -57,7 +57,7 @@ async function signOut() {
     user.value = null
   }
   catch (error) {
-    alert(error.message)
+    console.warn(error.message)
   }
   finally {
     loading.value = false

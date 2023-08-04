@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export const useApiFetch: typeof useFetch = (request, opts)=>{
   const config = useRuntimeConfig()
   return useFetch(request, { baseURL: config.public.apiBaseUrl,

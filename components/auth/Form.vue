@@ -9,10 +9,11 @@ const handleLogin = async() => {
     loading.value = true
     const { error } = await supabase.auth.signInWithOtp({ email: email.value })
     if (error) throw error
+    // eslint-disable-next-line no-alert
     alert('Check your email for the login link!')
   }
   catch (error) {
-    alert(error.error_description || error.message)
+    console.warn(error.error_description || error.message)
   }
   finally {
     loading.value = false
